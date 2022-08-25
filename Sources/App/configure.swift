@@ -14,6 +14,10 @@ public func configure(_ app: Application) throws {
         password: Environment.get("DATABASE_PASSWORD") ?? "vapor_password",
         database: Environment.get("DATABASE_NAME") ?? "vapor_database"
     ), as: .psql)
+    
+    /// The the migration and create the Database.
+    app.migrations.add(CreateSongs())
+    try app.autoMigrate().wait()
 
     // register routes
     try routes(app)
